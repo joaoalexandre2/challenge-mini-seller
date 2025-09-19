@@ -12,16 +12,13 @@ export default function LeadsList({ onSelectLead, onLeadsLoaded }) {
     const fetchLeads = async () => {
       setIsLoading(true);
       try {
-        console.log('Tentando carregar leads de:', '/src/data/leads.json');
         const response = await fetch('/src/data/leads.json');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log('Leads carregados com sucesso:', data);
         setLeads(data);
         if (onLeadsLoaded) onLeadsLoaded(data);
         setIsLoading(false);
       } catch (err) {
-        console.error('Erro ao carregar leads:', err.message);
         setError('Failed to load leads');
         setIsLoading(false);
       }
