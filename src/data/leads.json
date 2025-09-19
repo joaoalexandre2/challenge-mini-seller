@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "João Silva", "company": "TechCorp", "email": "joao@techcorp.com", "source": "Web", "score": 85, "status": "New" },
+  { "id": 2, "name": "Maria Oliveira", "company": "InnoSoft", "email": "maria@innosoft.com", "source": "Referral", "score": 92, "status": "Contacted" },
+  { "id": 3, "name": "Pedro Santos", "company": "DataSys", "email": "pedro@datasys.com", "source": "Event", "score": 78, "status": "New" },
+  { "id": 4, "name": "Ana Costa", "company": "CloudNet", "email": "ana@cloudnet.com", "source": "Web", "score": 95, "status": "Qualified" },
+  { "id": 5, "name": "Armando Luis", "company": "AsasNet", "email": "armando@asasnet.com", "source": "Web", "score": 80, "status": "Qualified" }
+]
