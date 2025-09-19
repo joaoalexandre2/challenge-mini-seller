@@ -12,16 +12,16 @@ export default function LeadsList({ onSelectLead, onLeadsLoaded }) {
     const fetchLeads = async () => {
       setIsLoading(true);
       try {
-        console.log('Tentando carregar leads de:', '/src/data/leads.json'); // Log do caminho
-        const response = await fetch('/src/data/leads.json'); // Caminho relativo ao root
+        console.log('Tentando carregar leads de:', '/src/data/leads.json');
+        const response = await fetch('/src/data/leads.json');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log('Leads carregados com sucesso:', data); // Log dos dados
+        console.log('Leads carregados com sucesso:', data);
         setLeads(data);
         if (onLeadsLoaded) onLeadsLoaded(data);
         setIsLoading(false);
       } catch (err) {
-        console.error('Erro ao carregar leads:', err.message); // Log do erro específico
+        console.error('Erro ao carregar leads:', err.message);
         setError('Failed to load leads');
         setIsLoading(false);
       }
@@ -30,18 +30,21 @@ export default function LeadsList({ onSelectLead, onLeadsLoaded }) {
     fetchLeads();
   }, [onLeadsLoaded]);
 
-  // Persistência em localStorage (restaura filtro e ordenação)
+  // Persistência em localStorage (restaura filtro, ordenação e busca)
   useEffect(() => {
     const savedFilter = localStorage.getItem('filterStatus');
     const savedSort = localStorage.getItem('sortDirection');
+    const savedSearch = localStorage.getItem('searchTerm');
     if (savedFilter) setFilterStatus(savedFilter);
     if (savedSort) setSortDirection(savedSort);
+    if (savedSearch) setSearchTerm(savedSearch);
   }, []);
 
   useEffect(() => {
     localStorage.setItem('filterStatus', filterStatus);
     localStorage.setItem('sortDirection', sortDirection);
-  }, [filterStatus, sortDirection]);
+    localStorage.setItem('searchTerm', searchTerm);
+  }, [filterStatus, sortDirection, searchTerm]);
 
   const filteredLeads = leads
     .filter(lead =>
@@ -56,19 +59,19 @@ export default function LeadsList({ onSelectLead, onLeadsLoaded }) {
   if (filteredLeads.length === 0) return <div className="text-center py-4">No leads found</div>;
 
   return (
-    <div className="p-4">
-      <div className="mb-4 flex flex-col sm:flex-row gap-4">
+    <div className="p-2 sm:p-4 md:p-6">
+      <div className="mb-4 flex flex-col sm:flex-row gap-2 sm:gap-4">
         <input
           type="text"
           placeholder="Search by name/company..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 border rounded w-full sm:w-1/3"
+          className="p-2 border rounded w-full sm:w-1/3 text-sm sm:text-base"
         />
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="p-2 border rounded w-full sm:w-1/3"
+          className="p-2 border rounded w-full sm:w-1/3 text-sm sm:text-base"
         >
           <option value="All">All Statuses</option>
           <option value="New">New</option>
@@ -77,22 +80,22 @@ export default function LeadsList({ onSelectLead, onLeadsLoaded }) {
         </select>
         <button
           onClick={() => setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')}
-          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full sm:w-auto text-sm sm:text-base"
         >
           Sort by Score ({sortDirection === 'desc' ? '↓' : '↑'})
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
         {filteredLeads.map(lead => (
           <div
             key={lead.id}
             onClick={() => onSelectLead(lead)}
-            className="cursor-pointer p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition"
+            className="cursor-pointer p-2 sm:p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition"
           >
-            <h3 className="font-bold">{lead.name}</h3>
-            <p>{lead.company}</p>
-            <p className="text-gray-600">Score: {lead.score}</p>
-            <p className="text-sm text-gray-500">Status: {lead.status}</p>
+            <h3 className="font-bold text-sm sm:text-base">{lead.name}</h3>
+            <p className="text-xs sm:text-sm">{lead.company}</p>
+            <p className="text-gray-600 text-xs sm:text-sm">Score: {lead.score}</p>
+            <p className="text-sm text-gray-500 text-xs sm:text-sm">Status: {lead.status}</p>
           </div>
         ))}
       </div>
