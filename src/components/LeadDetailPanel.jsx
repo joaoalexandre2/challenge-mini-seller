@@ -52,7 +52,9 @@ export default function LeadDetailPanel({ lead, onClose, onSave, children }) {
               Save
             </button>
           </div>
-          {children && <div className="mt-4">{children}</div>}
+          {children && 
+          <div className="mt-4">{children}</div>
+          }
         </div>
       </div>
     </div>
