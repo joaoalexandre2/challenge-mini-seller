@@ -1,9 +1,9 @@
 export default function OpportunitiesTable({ opps }) {
   return (
     <div className="p-2 sm:p-4">
-      <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Opportunities</h2>
+      {/* <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Opportunities</h2> */}
       {opps.length === 0 ? (
-        <p className="text-center py-2 sm:py-4">No opportunities yet</p>
+        <p className="text-center py-2 sm:py-4"></p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm sm:text-base min-w-full">
